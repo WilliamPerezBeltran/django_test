@@ -4,6 +4,7 @@ from emissions_project.domain.repositories import EmissionRepository
 from abc import ABC, ABCMeta
 from dataclasses import is_dataclass
 
+
 class EmissionEntityTests(SimpleTestCase):
     def setUp(self):
         self.emission_data = {
@@ -11,7 +12,7 @@ class EmissionEntityTests(SimpleTestCase):
             "emissions": 150.75,
             "emission_type": "CO2",
             "country": "Canada",
-            "activity": "Transport"
+            "activity": "Transport",
         }
         self.emission = Emission(**self.emission_data)
 

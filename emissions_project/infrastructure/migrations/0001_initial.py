@@ -7,23 +7,30 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='EmissionModel',
+            name="EmissionModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('year', models.IntegerField()),
-                ('emissions', models.FloatField()),
-                ('emission_type', models.CharField(max_length=50)),
-                ('country', models.CharField(max_length=100)),
-                ('activity', models.CharField(max_length=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("year", models.IntegerField()),
+                ("emissions", models.FloatField()),
+                ("emission_type", models.CharField(max_length=50)),
+                ("country", models.CharField(max_length=100)),
+                ("activity", models.CharField(max_length=100)),
             ],
             options={
-                'db_table': 'emissions',
-                'ordering': ['year'],
+                "db_table": "emissions",
+                "ordering": ["year"],
             },
         ),
     ]

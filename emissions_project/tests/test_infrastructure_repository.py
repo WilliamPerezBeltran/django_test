@@ -2,15 +2,46 @@ from django.test import TestCase
 from emissions_project.infrastructure.repository_impl import EmissionRepositoryImpl
 from emissions_project.infrastructure.models import EmissionModel
 
+
 class EmissionRepositoryImplTests(TestCase):
     def setUp(self):
         self.repo = EmissionRepositoryImpl()
         self.emissions_data = [
-            {"year": 2020, "emissions": 100.5, "emission_type": "CO2", "country": "Canada", "activity": "Transport"},
-            {"year": 2021, "emissions": 120.8, "emission_type": "CH4", "country": "USA", "activity": "Agriculture"},
-            {"year": 2022, "emissions": 95.2, "emission_type": "CO2", "country": "Canada", "activity": "Industry"},
-            {"year": 2023, "emissions": 200.1, "emission_type": "N2O", "country": "Mexico", "activity": "Energy"},
-            {"year": 2021, "emissions": 130.0, "emission_type": "CO2", "country": "USA", "activity": "Transport"},
+            {
+                "year": 2020,
+                "emissions": 100.5,
+                "emission_type": "CO2",
+                "country": "Canada",
+                "activity": "Transport",
+            },
+            {
+                "year": 2021,
+                "emissions": 120.8,
+                "emission_type": "CH4",
+                "country": "USA",
+                "activity": "Agriculture",
+            },
+            {
+                "year": 2022,
+                "emissions": 95.2,
+                "emission_type": "CO2",
+                "country": "Canada",
+                "activity": "Industry",
+            },
+            {
+                "year": 2023,
+                "emissions": 200.1,
+                "emission_type": "N2O",
+                "country": "Mexico",
+                "activity": "Energy",
+            },
+            {
+                "year": 2021,
+                "emissions": 130.0,
+                "emission_type": "CO2",
+                "country": "USA",
+                "activity": "Transport",
+            },
         ]
         for data in self.emissions_data:
             EmissionModel.objects.create(**data)
@@ -19,7 +50,9 @@ class EmissionRepositoryImplTests(TestCase):
         result = self.repo.list()
         self.assertEqual(len(result), len(self.emissions_data))
         years = [e.year for e in result]
-        self.assertEqual(sorted(years), sorted([d["year"] for d in self.emissions_data]))
+        self.assertEqual(
+            sorted(years), sorted([d["year"] for d in self.emissions_data])
+        )
 
     def test_list_with_dynamic_filters(self):
         dynamic_filters = [

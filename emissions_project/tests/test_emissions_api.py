@@ -3,14 +3,45 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from emissions_project.infrastructure.models import EmissionModel
 
+
 class EmissionsAPITests(APITestCase):
     def setUp(self):
         self.emissions_data = [
-            {"year": 2020, "emissions": 100.5, "emission_type": "CO2", "country": "Canada", "activity": "Transport"},
-            {"year": 2021, "emissions": 120.8, "emission_type": "CH4", "country": "USA", "activity": "Agriculture"},
-            {"year": 2022, "emissions": 95.2, "emission_type": "CO2", "country": "Canada", "activity": "Industry"},
-            {"year": 2023, "emissions": 200.1, "emission_type": "N2O", "country": "Mexico", "activity": "Energy"},
-            {"year": 2021, "emissions": 130.0, "emission_type": "CO2", "country": "USA", "activity": "Transport"},
+            {
+                "year": 2020,
+                "emissions": 100.5,
+                "emission_type": "CO2",
+                "country": "Canada",
+                "activity": "Transport",
+            },
+            {
+                "year": 2021,
+                "emissions": 120.8,
+                "emission_type": "CH4",
+                "country": "USA",
+                "activity": "Agriculture",
+            },
+            {
+                "year": 2022,
+                "emissions": 95.2,
+                "emission_type": "CO2",
+                "country": "Canada",
+                "activity": "Industry",
+            },
+            {
+                "year": 2023,
+                "emissions": 200.1,
+                "emission_type": "N2O",
+                "country": "Mexico",
+                "activity": "Energy",
+            },
+            {
+                "year": 2021,
+                "emissions": 130.0,
+                "emission_type": "CO2",
+                "country": "USA",
+                "activity": "Transport",
+            },
         ]
         for data in self.emissions_data:
             EmissionModel.objects.create(**data)
@@ -62,7 +93,14 @@ class EmissionsAPITests(APITestCase):
     def test_response_structure_and_types(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        expected_fields = {"id", "year", "emissions", "emission_type", "country", "activity"}
+        expected_fields = {
+            "id",
+            "year",
+            "emissions",
+            "emission_type",
+            "country",
+            "activity",
+        }
         for record in response.data:
             self.assertTrue(expected_fields.issubset(record.keys()))
             self.assertIsInstance(record["id"], int)
