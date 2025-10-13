@@ -1,5 +1,5 @@
-from emissions_app.domain.repositories import EmissionRepository
-from emissions_app.infrastructure.models import EmissionModel
+from emissions_project.domain.repositories import EmissionRepository
+from emissions_project.infrastructure.models import EmissionModel
 
 class EmissionRepositoryImpl(EmissionRepository):
     def list(self, filters=None):

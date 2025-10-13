@@ -1,9 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from emissions_app.infrastructure.repository_impl import EmissionRepositoryImpl
-from emissions_app.infrastructure.serializers import EmissionSerializer
-from emissions_app.usecases.get_emissions import GetEmissions
+from emissions_project.infrastructure.repository_impl import EmissionRepositoryImpl
+from emissions_project.infrastructure.serializers import EmissionSerializer
+from emissions_project.usecases.get_emissions import GetEmissions
+
 
 class EmissionListView(APIView):
     def get(self, request):
