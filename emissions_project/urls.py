@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from emissions_app.infrastructure.views import EmissionListView
+from emissions_project.infrastructure.views import EmissionListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
