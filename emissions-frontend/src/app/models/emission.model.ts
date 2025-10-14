@@ -1,8 +1,7 @@
 export interface Emission {
-  id: number;
+  year: number;
+  emissions: number;
+  emission_type: string;
   country: string;
   activity: string;
-  emission_type: string;
-  value: number;
-  year: number;
 }

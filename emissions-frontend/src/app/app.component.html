@@ -1,5 +1,12 @@
-<div>
-  <h1>Emisiones de Gases de Efecto Invernadero</h1>
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+<div *ngIf="loading" class="loader-container">
+  <div class="spinner"></div>
+  <p>Cargando emisiones...</p>
+</div>
+
+<div *ngIf="!loading && error">
+  <p class="error">{{ error }}</p>
+</div>
+
+<div *ngIf="!loading && !error">
   <app-emissions-chart [emissions]="emissions"></app-emissions-chart>
 </div>
