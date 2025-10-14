@@ -1,0 +1,39 @@
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  font-family: Arial, sans-serif;
+  color: #333;
+
+  .spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #5aa454;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}

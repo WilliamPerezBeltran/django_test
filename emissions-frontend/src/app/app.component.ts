@@ -1,36 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmissionsChartComponent } from './components/emissions-chart/emissions-chart.component';
+import { HttpClientModule } from '@angular/common/http';
 import { EmissionsService } from './services/emissions.service';
 import { Emission } from './models/emission.model';
-import { HttpClientModule } from '@angular/common/http';
+import { EmissionsChartComponent } from './components/emissions-chart/emissions-chart.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [CommonModule, HttpClientModule, EmissionsChartComponent],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  emissions: Emission[] = [];
-  errorMessage = '';
+  public emissions: Emission[] = [];
+  public loading = true;
+  public error: string | null = null;
 
   constructor(private emissionsService: EmissionsService) {}
 
-  ngOnInit() {
-    this.loadEmissions({ country: 'Canada', emission_type: 'CO2' });
+  ngOnInit(): void {
+    this.loadEmissions();
   }
 
-  loadEmissions(filters?: { country?: string; activity?: string; emission_type?: string }) {
-    this.emissionsService.getEmissions(filters).subscribe({
-      next: (data) => {
+  private loadEmissions(): void {
+    this.loading = true;
+    this.error = null;
+
+    this.emissionsService.getEmissions().subscribe({
+      next: (data: Emission[]) => {
         this.emissions = data;
-        this.errorMessage = '';
+        this.loading = false;
       },
       error: (err) => {
-        this.emissions = [];
-        this.errorMessage = err.message;
+        console.error(err);
+        this.error = 'No se pudieron cargar las emisiones.';
+        this.loading = false;
       },
     });
   }

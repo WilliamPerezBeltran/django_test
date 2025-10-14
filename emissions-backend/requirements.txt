@@ -4,11 +4,13 @@ asgiref==3.8.1
 attrs==19.3.0
 backports.zoneinfo==0.2.1
 bcrypt==3.1.7
+black==24.8.0
 blinker==1.4
 Brlapi==0.7.0
 cached-property==1.5.1
 certifi==2019.11.28
 chardet==3.0.4
+click==8.1.8
 command-not-found==0.3
 contourpy==1.1.1
 cryptography==2.8
@@ -21,6 +23,7 @@ distro==1.4.0
 distro-info===0.23ubuntu1
 dj-database-url==1.1.0
 django==4.2.25
+django-cors-headers==4.4.0
 djangorestframework==3.15.2
 docker==4.1.0
 docker-compose==1.25.0
@@ -59,6 +62,7 @@ matplotlib==3.7.5
 monotonic==1.5
 more-itertools==4.2.0
 msgpack==0.6.2
+mypy-extensions==1.1.0
 netifaces==0.10.4
 numpy==1.24.4
 oauthlib==3.1.0
@@ -66,9 +70,11 @@ olefile==0.46
 packaging==25.0
 paramiko==2.6.0
 parso==0.8.5
+pathspec==0.12.1
 pbr==5.4.5
 pexpect==4.6.0
 Pillow==7.0.0
+platformdirs==4.3.6
 pluggy==1.5.0
 protobuf==3.6.1
 pycairo==1.16.2

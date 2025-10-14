@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
 import { Emission } from '../../models/emission.model';
 
 @Component({
@@ -13,29 +13,40 @@ import { Emission } from '../../models/emission.model';
 export class EmissionsChartComponent implements OnChanges {
   @Input() emissions: Emission[] = [];
 
-  public chartData: { name: string; value: number }[] = [];
+  public chartData: { name: string; series: { name: string; value: number }[] }[] = [];
 
-  public colorScheme = 'vivid';
+  public colorScheme: Color = {
+    name: 'greenScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#5AA454'],
+  };
 
-  ngOnChanges(): void {
-    this.updateChart();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['emissions']) {
+      this.buildChart();
+    }
   }
 
-  private updateChart() {
-    if (!this.emissions || this.emissions.length === 0) {
+  private buildChart(): void {
+    if (!this.emissions?.length) {
       this.chartData = [];
       return;
     }
 
-    const dataMap: { [year: string]: number } = {};
+    const grouped: { [year: string]: number } = {};
+
     this.emissions.forEach((e) => {
-      const year = e.year.toString();
-      dataMap[year] = (dataMap[year] || 0) + e.value;
+      // Cambié e.value por e.emissions
+      if (e?.year != null && e.emissions != null && !isNaN(e.emissions)) {
+        grouped[e.year.toString()] = (grouped[e.year.toString()] || 0) + Number(e.emissions);
+      }
     });
 
-    this.chartData = Object.keys(dataMap).map((year) => ({
-      name: year,
-      value: dataMap[year],
-    }));
+    const series = Object.keys(grouped)
+      .map((year) => ({ name: year, value: grouped[year] }))
+      .sort((a, b) => Number(a.name) - Number(b.name));
+
+    this.chartData = series.length ? [{ name: 'Emisiones Anuales', series }] : [];
   }
 }
