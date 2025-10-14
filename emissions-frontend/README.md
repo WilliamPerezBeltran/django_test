@@ -1,68 +1,183 @@
-# EmissionsFrontend
+# Emissions Frontend
 
+This document provides an overview of the Emissions frontend project. It includes architecture, design principles, components, services, testing practices, and Docker setup. This README is intended for developers and engineers who want to understand, run, and extend the frontend application.
 
+## Project Description
+
+The Emissions frontend is an Angular application that visualizes emissions data from different countries, years, and activities. It consumes a REST API to fetch data and renders charts using `@swimlane/ngx-charts` and `d3`. The project is structured for modularity and maintainability:
+
+* **Components**: UI elements like `EmissionsChartComponent`.
+* **Services**: Handle API communication (`EmissionsService`).
+* **Models**: Define TypeScript interfaces for domain entities (`Emission`).
+* **Styles**: Sass (`.scss`) is used for component styling.
+* **Tests**: Unit tests using Jasmine and Karma.
+
+This architecture ensures separation of concerns, reusability, and testability.
+
+## Stack
+
+* Angular 20
+* TypeScript 5.9
+* RxJS 7
+* ngx-charts 23
+* D3 7
+* Sass / SCSS
+* Docker & Docker Compose
+
+## Architecture Explanation
+
+* **Components**: Display UI and interact with services. Each component has its own template and styles.
+* **Services**: Responsible for API calls and data handling.
+* **Models**: Define strong typing for domain objects.
+* **Modules**: Organize components and services.
+* **Testing**: Jasmine + Karma unit tests for components and services.
+
+This separation ensures **Single Responsibility Principle (SRP)** and allows adding features without modifying existing components (**Open/Closed Principle**).
+
+## SOLID Principles Applied
+
+* **SRP**: Each component or service has a single responsibility.
+* **OCP**: Components can be extended with additional functionality without modifying existing code.
+* **LSP**: Components and services can be replaced by compatible alternatives.
+* **ISP**: Services expose only the methods required by components.
+* **DIP**: Components depend on service abstractions rather than concrete implementations.
+
+## Design Patterns
+
+* **Service Pattern**: Angular services handle API requests and data manipulation.
+* **Component-Based Architecture**: Components encapsulate templates, styles, and behavior.
+* **Observable Pattern**: RxJS observables handle asynchronous data streams.
+
+## Project Structure
+
+```tree
+.
+├── angular.json
+├── dist
+│   └── test-out
+├── docker-compose.yml
+├── Dockerfile
+├── package.json
+├── package-lock.json
+├── public
+│   └── favicon.ico
+├── README.md
+├── src
+│   ├── app
+│   │   ├── app.component.html
+│   │   ├── app.component.scss
+│   │   ├── app.component.ts
+│   │   ├── app.config.ts
+│   │   ├── components
+│   │   │   └── emissions-chart
+│   │   │       ├── emissions-chart.component.html
+│   │   │       ├── emissions-chart.component.scss
+│   │   │       └── emissions-chart.component.ts
+│   │   ├── models
+│   │   │   └── emission.model.ts
+│   │   └── services
+│   │       └── emissions.service.ts
+│   ├── assets
+│   ├── index.html
+│   ├── main.ts
+│   └── styles.scss
+├── tsconfig.app.json
+├── tsconfig.json
+└── tsconfig.spec.json
+```
+
+### Folder Description
+
+* `app/components/` -> Angular components (UI elements like charts).
+* `app/services/` -> Angular services for API requests.
+* `app/models/` -> TypeScript interfaces and domain models.
+* `assets/` -> Static assets like images or icons.
+* `tests/` -> Jasmine and Karma tests.
+
+### File Description
+
+* `emissions-chart.component.ts` -> Component logic for displaying emission charts.
+* `emissions-chart.component.html` -> Component template.
+* `emissions-chart.component.scss` -> Component styles.
+* `emission.model.ts` -> TypeScript interface for Emission entity.
+* `emissions.service.ts` -> Service to fetch emissions from API.
+* `app.component.ts` -> Main app component logic.
+* `app.component.html` -> Main template.
+* `app.component.scss` -> Main styles.
+
+## Docker Setup
+
+### Dockerfile
+
+```dockerfile
+FROM node:22-alpine
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 4200
+
+CMD ["npm", "run", "start"]
+```
+
+### docker-compose.yml
+
+```yaml
+version: '3.9'
+services:
+  frontend:
+    build: .
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/usr/src/app
+    command: npm run start
+```
+
+### Running Docker
+
+Build and start containers:
+
+```bash
 docker-compose up --build
-
-Luego abre :
-
-http://localhost:4200
-
-
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.5.
-
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Stop containers:
 
 ```bash
-ng generate component component-name
+docker-compose down
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Testing
+
+The project uses **Jasmine** and **Karma**.
+
+Run all tests:
 
 ```bash
-ng generate --help
+npm run test
 ```
 
-## Building
-
-To build the project run:
+Run tests in watch mode:
 
 ```bash
-ng build
+npm run test -- --watch
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Development Practices
 
-## Running unit tests
+* **Component-Based Architecture**: Keep UI modular and reusable.
+* **Service-Oriented**: API communication is centralized in services.
+* **Test-Driven Development**: Use Jasmine/Karma for unit tests.
+* **Dockerized**: Ensure consistent development environments.
+* **Linting**: Prettier enforces code style.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Author
 
-```bash
-ng test
-```
+**William Pérez**
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* [GitHub profile](https://github.com/WilliamPerezBeltran)
