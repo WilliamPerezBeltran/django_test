@@ -1,0 +1,5 @@
+<div>
+  <h1>Emisiones de Gases de Efecto Invernadero</h1>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  <app-emissions-chart [emissions]="emissions"></app-emissions-chart>
+</div>
