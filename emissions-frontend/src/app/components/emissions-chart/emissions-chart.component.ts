@@ -37,7 +37,6 @@ export class EmissionsChartComponent implements OnChanges {
     const grouped: { [year: string]: number } = {};
 
     this.emissions.forEach((e) => {
-      // Cambié e.value por e.emissions
       if (e?.year != null && e.emissions != null && !isNaN(e.emissions)) {
         grouped[e.year.toString()] = (grouped[e.year.toString()] || 0) + Number(e.emissions);
       }
