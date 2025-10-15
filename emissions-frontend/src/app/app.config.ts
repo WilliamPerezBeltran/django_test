@@ -1,6 +1,8 @@
+import { environment } from '../environments/environment';
+
 export const AppConfig = {
-  apiUrl: 'http://localhost:8000/api',
-  defaultCountry: 'Canada',
-  defaultActivity: 'Transport',
-  defaultEmissionType: 'CO2',
+  apiUrl: environment.apiUrl,
+  defaultCountry: environment.defaultCountry,
+  defaultActivity: environment.defaultActivity,
+  defaultEmissionType: environment.defaultEmissionType,
 };
