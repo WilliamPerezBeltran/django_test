@@ -1,10 +1,19 @@
 version: '3.9'
+
 services:
   frontend:
     build: .
+    container_name: emissions-frontend
     ports:
       - "4200:4200"
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    command: npm start
+      - ./src:/app/src                
+      - ./scripts:/app/scripts          
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true        
+    command: sh -c "npm run prestart && npm start"
+    stdin_open: true
+    tty: true

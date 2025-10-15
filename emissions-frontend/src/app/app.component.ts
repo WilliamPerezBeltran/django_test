@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.error = 'No se pudieron cargar las emisiones.';
+        this.error = 'The broadcasts could not be loaded.';
         this.loading = false;
       },
     });
