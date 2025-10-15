@@ -23,4 +23,3 @@ writeFileSync(targetPath, envConfigFile);
 console.log(`Environment file generated for ${env}`);
 console.log(`Environment file generated at ${targetPath}`);
 console.log(`Scripts generate-env.js executed`);
-
