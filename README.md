@@ -49,6 +49,10 @@ This repository contains the full Emissions project, including backend and front
 * Developers should first review the respective folder README for setup instructions before running or modifying the applications.
 * PDFs provide deeper insights into design decisions, architecture, and technical details for both backend and frontend.
 
+> **Important Note:**  
+> This API was developed as a simple demonstration and does not implement standard security measures. Authentication, authorization, encryption, rate limiting, and other best practices for securing RESTful APIs have not been applied. All data is openly accessible, and the API should not be used in a production environment without proper security controls.
+
+
 ## Author
 
 **William Pérez**  
