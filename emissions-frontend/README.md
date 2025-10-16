@@ -107,37 +107,6 @@ This separation ensures **Single Responsibility Principle (SRP)** and allows add
 
 ## Docker Setup
 
-### Dockerfile
-
-```dockerfile
-FROM node:22-alpine
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-
-EXPOSE 4200
-
-CMD ["npm", "run", "start"]
-```
-
-### docker-compose.yml
-
-```yaml
-version: '3.9'
-services:
-  frontend:
-    build: .
-    ports:
-      - '4200:4200'
-    volumes:
-      - .:/usr/src/app
-    command: npm run start
-```
-
 ### Running Docker
 
 Build and start containers:
@@ -152,21 +121,28 @@ Stop containers:
 docker-compose down
 ```
 
+Once Docker is running and the application is up on the server, the app will appear like this.
+
+![Python 1](assets/z_python1.png)
+
+![Python 2](assets/z-python2.png)
+
+![Python 3 Filter](assets/z-python3-filter.png)
+
+
 ## Testing
-
 The project uses **Jasmine** and **Karma**.
-
 Run all tests:
 
 ```bash
 npm run test
 ```
-
 Run tests in watch mode:
 
 ```bash
 npm run test -- --watch
 ```
+![Angular Test](assets/z-angular-test.png)
 
 ## Development Practices
 
