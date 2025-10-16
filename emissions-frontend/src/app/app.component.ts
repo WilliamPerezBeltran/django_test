@@ -33,6 +33,8 @@ export class AppComponent implements OnInit {
   public activities: string[] = [];
   public emissionTypes: string[] = [];
 
+  public showTable = true;
+
   constructor(private emissionsService: EmissionsService) {}
 
   ngOnInit(): void {
@@ -76,5 +78,9 @@ export class AppComponent implements OnInit {
     this.countries = Array.from(new Set(this.filteredEmissions.map(e => e.country))).sort();
     this.activities = Array.from(new Set(this.filteredEmissions.map(e => e.activity))).sort();
     this.emissionTypes = Array.from(new Set(this.filteredEmissions.map(e => e.emission_type))).sort();
+  }
+
+  toggleTable(): void {
+    this.showTable = !this.showTable;
   }
 }

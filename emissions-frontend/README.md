@@ -121,15 +121,6 @@ Stop containers:
 docker-compose down
 ```
 
-Once Docker is running and the application is up on the server, the app will appear like this.
-
-![Python 1](assets/z_python1.png)
-
-![Python 2](assets/z-python2.png)
-
-![Python 3 Filter](assets/z-python3-filter.png)
-
-
 ## Testing
 The project uses **Jasmine** and **Karma**.
 Run all tests:
@@ -142,7 +133,6 @@ Run tests in watch mode:
 ```bash
 npm run test -- --watch
 ```
-![Angular Test](assets/z-angular-test.png)
 
 ## Development Practices
 

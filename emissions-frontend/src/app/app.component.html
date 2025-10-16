@@ -18,8 +18,11 @@
       <option *ngFor="let t of emissionTypes" [value]="t">{{ t }}</option>
     </select>
   </div>
+  <button (click)="toggleTable()">
+    {{ showTable ? 'Hide Table' : 'Show Table' }}
+  </button>
 
-  <table>
+  <table *ngIf="showTable">
     <thead>
       <tr>
         <th>Country</th>
