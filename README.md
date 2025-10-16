@@ -18,7 +18,7 @@ This repository contains the full Emissions project, including backend and front
 ### Folders Overview
 
 * **docs**
-  Contains additional reference materials, notes, supporting documentation, and the technical test file related to the project.
+  Includes supplementary reference materials, notes, and supporting documentation, along with the technical test file for the project. A **video demonstrating** the code's results is also provided.
 
 * **emissions-backend**
   This folder contains the Django-based backend application responsible for managing, storing, and exposing emission data.
