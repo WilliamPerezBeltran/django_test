@@ -1,34 +1,53 @@
 # Emissions Project
 
-This document provides an overview of the complete Emissions project, including the backend and frontend. It includes architecture, design principles, API endpoints, testing practices, and Docker setup. This README is intended for developers and engineers who want to understand, run, and extend the application.
+This repository contains the full Emissions project, including backend and frontend applications, detailed documentation, and technical test materials. The project is structured to separate concerns clearly and provide comprehensive guidance for developers.
 
-## Project Description
+## Repository Structure
 
-The Emissions project manages emission data for different countries, years, and activities. The backend exposes this data via a REST API, and the frontend visualizes it using Angular and `ngx-charts`. The project is structured to separate domain logic, infrastructure, and presentation layers:
+```
+.
+├── docs
+├── emissions-backend
+├── emissions-frontend
+├── README.md
+├── backend-documentation.pdf
+├── frontend-documentation.pdf
+├── Technical Test, Colombia.pdf
+```
 
-* **Backend**:
+### Folders Overview
 
-  * **Domain**: Entities (`Emission`) and abstract repositories (`EmissionRepository`) that define core business logic.
-  * **Infrastructure**: Django models, serializers, views, and repository implementations.
-  * **Use Cases**: Application logic such as fetching emissions.
-  * **Tests**: Validates the behavior of domain, infrastructure, and use cases.
-  * **README**: See `emissions-backend/README.md` for detailed backend information, endpoints, and testing instructions.
+* **docs**
+  Contains additional reference materials, notes, supporting documentation, and the technical test file related to the project.
 
-* **Frontend**:
+* **emissions-backend**
+  This folder contains the Django-based backend application responsible for managing, storing, and exposing emission data.
 
-  * Angular app to visualize emission data with interactive charts.
-  * Service layer communicates with the backend API.
-  * Components display emissions data by country, year, and activity.
-  * **README**: See `emissions-frontend/README.md` for detailed frontend setup, components, and testing instructions.
+  * Includes its own `README.md` with detailed instructions on setup, running the server, database configuration, and testing.
+  * Includes `backend-documentation.pdf` for an in-depth technical overview of architecture, entities, use cases, and API endpoints.
 
-This architecture ensures modularity, testability, and maintainability.
+* **emissions-frontend**
+  This folder contains the Angular-based frontend application responsible for displaying emission data, handling user interaction, and communicating with the backend.
 
-## Development Practices
+  * Includes its own `README.md` with detailed instructions on project setup, building, running, and testing the frontend application.
+  * Includes `frontend-documentation.pdf` for an in-depth technical overview of components, services, state management, and UI structure.
 
-* **TDD**: Test-driven development for reliable and maintainable code.
-* **Dockerized**: All dependencies are containerized.
-* **Code Quality**: PEP8 and Pythonic standards in backend; ESLint and Prettier for frontend.
-* **CI/CD Ready**: Can be integrated with GitHub Actions for automated testing.
+### Documentation Files
+
+* **backend-documentation.pdf**
+  Comprehensive documentation for the backend, detailing architecture, design, APIs, database schema, and testing practices.
+
+* **frontend-documentation.pdf**
+  Comprehensive documentation for the frontend, detailing UI components, state management, services, routing, and integration with the backend.
+
+* **Technical Test, Colombia.pdf**
+  Contains the technical test instructions, requirements, and specifications used during the project evaluation phase. A copy of this file is also available in the `docs` folder.
+
+### Notes
+
+* Each folder (`emissions-backend` and `emissions-frontend`) is self-contained with its own README and PDF documentation.
+* Developers should first review the respective folder README for setup instructions before running or modifying the applications.
+* PDFs provide deeper insights into design decisions, architecture, and technical details for both backend and frontend.
 
 ## Author
 

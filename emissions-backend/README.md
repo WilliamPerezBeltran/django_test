@@ -42,6 +42,43 @@ This separation ensures **Single Responsibility Principle (SRP)** and allows add
 * **Factory/Builder Pattern**: Use cases in `usecases/get_emissions.py` construct domain objects from models.
 * **Strategy Pattern**: Supports different strategies for filtering or calculating emissions.
 
+
+# Emissions Project - Docker Setup
+
+This project uses **Docker Compose** to run the Django backend with SQLite.
+
+## Start the Containers
+
+```bash
+docker-compose up -d
+```
+
+## Seed the Database
+
+```bash
+docker-compose exec backend python manage.py seed_emissions
+```
+
+## Verify the Data
+
+```bash
+docker-compose exec backend python manage.py shell
+```
+
+Inside the shell:
+
+```python
+from emissions_project.infrastructure.models import EmissionModel
+EmissionModel.objects.count()
+# Output: 100
+```
+
+## Notes
+
+* SQLite database file `db.sqlite3` is persistent in the project folder.
+* You only need to run the seed once unless you delete the database file or want to reseed it.
+* Run any Django management command inside the container with `docker-compose exec backend python3 manage.py <command>`.
+
 ## API Endpoints
 
 | Method | URL               | Description                     | Filters                                        |
@@ -85,124 +122,152 @@ curl -X GET "http://localhost:8000/api/emissions/?year=2020&country=Colombia&emi
 ## Project Structure
 
 ```tree
-.
 ├── db.sqlite3
 ├── docker-compose.yml
 ├── Dockerfile
 ├── emissions_project
-│   ├── asgi.py
-│   ├── domain
-│   │   ├── entities.py
-│   │   └── repositories.py
-│   ├── infrastructure
-│   │   ├── migrations
-│   │   │   ├── 0001_initial.py
-│   │   │   └── __init__.py
-│   │   ├── models.py
-│   │   ├── repository_impl.py
-│   │   ├── serializers.py
-│   │   └── views.py
-│   ├── urls.py
-│   ├── usecases
-│   │   └── get_emissions.py
-│   ├── settings.py
-│   └── wsgi.py
+│   ├── asgi.py
+│   ├── domain
+│   │   ├── entities.py
+│   │   ├── __pycache__
+│   │   │   ├── entities.cpython-38.pyc
+│   │   │   └── repositories.cpython-38.pyc
+│   │   └── repositories.py
+│   ├── infrastructure
+│   │   ├── management
+│   │   │   └── commands
+│   │   │       └── seed_emissions.py
+│   │   ├── migrations
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── __init__.py
+│   │   │   └── __pycache__
+│   │   │       ├── 0001_initial.cpython-38.pyc
+│   │   │       └── __init__.cpython-38.pyc
+│   │   ├── models.py
+│   │   ├── __pycache__
+│   │   │   ├── models.cpython-38.pyc
+│   │   │   ├── repository_impl.cpython-38.pyc
+│   │   │   ├── serializers.cpython-38.pyc
+│   │   │   └── views.cpython-38.pyc
+│   │   ├── repository_impl.py
+│   │   ├── serializers.py
+│   │   └── views.py
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-38.pyc
+│   │   ├── settings.cpython-38.pyc
+│   │   ├── urls.cpython-38.pyc
+│   │   └── wsgi.cpython-38.pyc
+│   ├── settings.py
+│   ├── tests
+│   │   ├── __pycache__
+│   │   │   ├── test_domain_entities.cpython-38.pyc
+│   │   │   ├── test_emissions_api.cpython-38.pyc
+│   │   │   ├── test_infrastructure_repository.cpython-38.pyc
+│   │   │   └── test_usecases_get_emissions.cpython-38.pyc
+│   │   ├── test_domain_entities.py
+│   │   ├── test_emissions_api.py
+│   │   ├── test_infrastructure_repository.py
+│   │   └── test_usecases_get_emissions.py
+│   ├── urls.py
+│   ├── usecases
+│   │   ├── get_emissions.py
+│   │   └── __pycache__
+│   │       └── get_emissions.cpython-38.pyc
+│   └── wsgi.py
 ├── manage.py
+├── project_inspect.sh
 ├── README.md
 └── requirements.txt
-```
 
-### Folder Description
-
-* `domain/` -> Entities and repository interfaces.
-* `infrastructure/` -> Django models, views, serializers, and repository implementations.
-* `usecases/` -> Application logic for fetching or processing emissions.
-* `tests/` -> Unit and integration tests.
-
-### File Description
-
-* `entities.py` -> Emission dataclass.
-* `repositories.py` -> Abstract repository interface.
-* `models.py` -> Django model for Emission.
-* `repository_impl.py` -> Concrete implementation using Django ORM.
-* `serializers.py` -> DRF serializers.
-* `views.py` -> API views.
-* `get_emissions.py` -> Use case to fetch emissions.
-* `urls.py` -> API routes.
-* `tests/` -> Unit and integration tests.
-
-## Docker Setup
-
-### Dockerfile
-
-```dockerfile
-FROM python:3.8-slim
-
-WORKDIR /usr/src/app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 8000
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-```
-
-### docker-compose.yml
-
-```yaml
-version: '3.9'
-services:
-  backend:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/usr/src/app
-    environment:
-      - PYTHONUNBUFFERED=1
-```
-
-### Running Docker
-
-Build and start containers:
-
-```bash
-docker-compose up --build
-```
-
-Stop containers:
-
-```bash
-docker-compose down
 ```
 
 ## Testing
 
-The project uses Django’s test framework.
+There are four tests in this app:
+- test_domain_entities.py 
+- test_emissions_api.py
+- test_infrastructure_repository.py  
+- test_usecases_get_emissions.py
 
-Run all tests:
+## Running Tests
 
+##  Tests 1
 ```bash
-docker-compose run backend python manage.py test
+docker-compose run backend python manage.py test emissions_project.tests.test_domain_entities
+```
+## Test 1 Output
+```bash
+Found 8 test(s).
+System check identified no issues (0 silenced).
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+OK
+
 ```
 
-Run a specific test file:
-
+##  Tests 2
 ```bash
 docker-compose run backend python manage.py test emissions_project.tests.test_emissions_api
 ```
+## Test 2 Output
+```bash
+Found 6 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.030s
 
+OK
+```
+
+##  Tests 3
+```bash
+docker-compose run backend python manage.py test emissions_project.tests.test_infrastructure_repository
+```
+## Test 3 Output
+```bash
+
+
+Found 4 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.010s
+
+OK
+```
+
+##  Tests 4
+```bash
+docker-compose run backend python manage.py test emissions_project.tests.test_usecases_get_emissions
+```
+## Test 4 Output
+```bash
+Found 6 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.013s
+
+OK
+```
 ## Development Practices
-
 * **TDD**: Test-driven development for reliable and maintainable code.
 * **Dockerized**: All dependencies are containerized for reproducible development environments.
-* **Code Quality**: PEP8 and Pythonic standards followed.
+
+## License
+This project is open source and free to use.
 
 ## Author
-
 **William Pérez**
-
 * [GitHub profile](https://github.com/WilliamPerezBeltran)
+
+
+
+
